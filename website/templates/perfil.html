@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Perfil |{% endblock %}
+{% block stylesheet %}<link rel="stylesheet" href="{% static 'styles/perfil.css' %}">{% endblock %}
+
+{% block content %}
+  <a class="back-button" href="/"><i class="fa-solid fa-arrow-left"></i></a>
+
+  <section class="hello-container">
+    <h1>Olá, <span id="name">{{ user.first_name.split.0 | default:'Usuário'}}</span></h1>
+    <p id="date"></p>
+  </section>
+
+  <section class="card-container">
+    <div class="top-container">
+      <div class="contact">
+        <h2>{{ user.first_name | default:'' }}</h2>
+        <p class="email">{{ user.email }}</p>
+      </div>
+
+      <div class="plan">Plano Básico</div>
+    </div>
+
+    <form method="POST" action="{% url 'atualizar-perfil' %}" id="form">
+      {% csrf_token %}
+      <div class="data">
+        <p class="title">Nome Completo</p>
+        <div class="text-card">
+          <input type="text" name="name" value="{{ user.first_name | default:'' }}" id="full-name" required/>
+        </div>
+        <span id="name-error" class="error"></span>
+
+        <p class="title">Nova Senha</p>
+        <div class="text-card">
+          <input type="text" name="password" id="password" value="" placeholder="********"/>
+        </div>
+        <span id="password-error" class="error"></span>
+
+        <button type="submit" id="submit-button" class="edit-button">Editar</button>
+
+      </div>
+    </form>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'scripts/perfil.js' %}"></script>
+{% endblock %}
+</body>
+</html>

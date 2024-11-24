@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Recuperar Conta |{% endblock %}
+{% block stylesheet %}<link rel="stylesheet" href="{% static 'styles/forms.css' %}">{% endblock %}
+
+{% block content %}
+    <section class="card-container">
+      <h2 class="title">Recuperar Conta</h2>
+        <form id="form" class="form-container">
+          {% csrf_token %}
+          <label class="input-label" for="email">Email</label>
+          <div class="input-container">
+            <input type="email" id="email" name="email" placeholder="usuario@dominio.com" value="{{ form.EMAIL.value }}">
+          </div>
+          <span id="email-error" class="error"></span>
+          
+          <button class="submit-button" type="submit" id="submit-button">Mandar Email</button>
+          
+          <p class="no-account">Lembrou a senha? <a href="/login">Login</a></p>
+        </form>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'scripts/validateForm.js' %}"></script>
+{% endblock %}
+</body>
+</html>

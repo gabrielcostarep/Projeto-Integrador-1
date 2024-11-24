@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Login |{% endblock %}
+{% block stylesheet %}<link rel="stylesheet" href="{% static 'styles/forms.css' %}">{% endblock %}
+
+{% block content %}
+  <section class="card-container">
+    <h2 class="title">Login</h2>
+    <form method="POST" action="{% url 'login' %}" id="form" class="form-container">
+      {% csrf_token %}
+
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+
+      <label class="input-label" for="email">Email</label>
+      <div class="input-container">
+        <input type="email" id="email" name="email" placeholder="usuario@dominio.com" value="{{ email | default:''}}">
+      </div>
+      <span id="email-error" class="error"></span>
+
+      <label class="input-label" for="password">Senha</label>
+      <div class="input-container">
+        <input type="password" id="password" name="password" placeholder="********" value="{{ password | default:'' }}">
+        <i class="fa fa-eye-slash toggle-password" id="togglePassword"></i>
+      </div>
+      <span id="password-error" class="error"></span>
+
+      <a class="forgot-password" href="/recuperar-conta">Esqueceu a Senha?</a>
+      
+      <button class="submit-button" type="submit" id="submit-button">Entrar</button>
+
+      <p class="no-account">Não possui uma conta? <a href="/cadastrar">Registre-se</a></p>
+    </form>
+  </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'scripts/validateForm.js' %}"></script>
+  <script src="{% static 'scripts/login.js' %}"></script>
+{% endblock %}
+</body>
+</html>

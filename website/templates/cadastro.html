@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cadastro |{% endblock %}
+{% block stylesheet %}<link rel="stylesheet" href="{% static 'styles/forms.css' %}">{% endblock %}
+
+{% block content %}
+    <section class="card-container">
+      <h2 class="title">Cadastro</h2>
+        <form method="POST" action="{% url 'cadastrar' %}" id="form" class="form-container">
+          {% csrf_token %}
+          <label class="input-label" for="email">Nome</label>
+          <div class="input-container">
+            <input type="text" id="name" name="name" placeholder="Nome Completo" value="{{ name | default:'' }}" required>
+          </div>
+          <span id="name-error" class="error"></span>
+
+          <label class="input-label" for="email">Email</label>
+          <div class="input-container">
+            <input type="email" id="email" name="email" placeholder="usuario@dominio.com" value="{{ email | default:'' }}" required>
+          </div>
+          <span id="email-error" class="error"></span>
+          
+  
+          <label class="input-label" for="password">Senha</label>
+          <div class="input-container">
+            <input type="password" id="password" name="password" placeholder="********" value="{{ password | default:''}}" required>
+            <i class="fa fa-eye-slash toggle-password" id="togglePassword"></i>
+          </div>
+          <span id="password-error" class="error"></span>
+
+          <label class="input-label" for="retry-password">Repetir Senha</label>
+          <div class="input-container">
+            <input type="password" id="retry-password" name="retry-password" placeholder="********" value="{{ retry_password | default:''}}" required>
+          </div>
+          <span id="retry-password-error" class="error"></span>
+          
+          <button class="submit-button" type="submit" id="submit-button">Confirmar</button>
+
+          <p class="no-account">Já tem uma conta? <a href="/login">Login</a></p>
+        </form>
+    </section>
+{% endblock %}
+
+{% block scripts %}
+  <script src="{% static 'scripts/validateForm.js' %}"></script>
+  <script src="{% static 'scripts/cadastro.js' %}"></script>
+{% endblock %}
+</body>
+</html>

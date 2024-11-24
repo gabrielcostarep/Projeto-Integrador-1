@@ -1,0 +1,90 @@
+@font-face {
+  font-family: "Gilroy";
+  src: url('../fonts/Gilroy-Light.ttf');
+  font-weight: light;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url('../fonts/Gilroy-Regular.ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url('../fonts/Gilroy-Medium.ttf');
+  font-weight: medium;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Gilroy";
+  src: url('../fonts/Gilroy-Bold.ttf');
+  font-weight: bold;
+  font-style: normal;
+}
+
+* {
+  padding: 0;
+  border: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Gilroy", Roboto, sans-serif;
+}
+
+a {
+  text-decoration: none;
+}
+
+#message-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.popup-message {
+  padding: 15px 20px;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: white !important;
+  animation: fadeOut 5s ease-in-out forwards;
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.popup-message.success {
+  background-color: #28a745; /* Verde para mensagens de sucesso */
+}
+
+.popup-message.error {
+  background-color: #dc3545; /* Vermelho para mensagens de erro */
+}
+
+.popup-message.info {
+  background-color: #17a2b8; /* Azul para mensagens informativas */
+}
+
+.popup-message.warning {
+  background-color: #ffc107; /* Amarelo para mensagens de alerta */
+  color: black;
+}
+
+@keyframes fadeOut {
+  0%, 90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+}

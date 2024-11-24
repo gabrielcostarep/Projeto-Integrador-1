@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block stylesheet %}<link rel="stylesheet" href="{% static 'styles/main.css' %}">{% endblock %}
+
+{% block content %}
+  <menu>
+    <i id="menu" class="fa-solid fa-clock-rotate-left"></i>
+
+    <a href="/perfil"><i class="fa-regular fa-user"></i></a>
+
+    <a href="/logout"><i class="fa-solid fa-arrow-right-from-bracket"></i></a>
+  </menu>
+
+  <section id="menu-container" class="menu-container {{ menu_bar|default:'' }}">
+    <section class="history-cards">
+      {% for translation in history %}
+      <form method="POST" action="{% url 'deletar-traducao' %}">
+        {% csrf_token %}
+        <input type="hidden" name="translation_id" value="{{ translation.id }}">
+        <div class="history-card">
+          <div class="history-content">
+            <p class="language">
+              <span id="sourceLanguage">{{ translation.source_language }}</span>
+              <i class="fa-solid fa-arrow-right target"></i>
+              <span id="targetLanguage">{{ translation.target_language }}</span>
+            </p>
+            <p class="source-result">{{ translation.source_text }}</p>
+            <p class="target-result">{{ translation.translated_text }}</p>
+          </div>
+          <button type="submit" class="fa-solid fa-trash remove-history"></button>
+        </div>
+      </form>
+      {% empty %}
+      <p>Nenhum histórico de tradução disponível.</p>
+      {% endfor %}
+    </section>
+  
+    {% if history %}
+    <form method="POST" action="{% url 'limpar-historico' %}" class="clear-history-form">
+      {% csrf_token %}
+      <button type="submit" class="clear-history">Limpar todo o histórico</button>
+    </form>
+    {% endif %}
+  </section>
+
+  <form id="translation-form" method="POST" action="{% url 'home' %}">
+    {% csrf_token %}
+    <section class="selection-container">
+      <select class="select-language" name="source-language" id="source-language">
+        {% for code, name in languages %}
+          <option value="{{ code }}">{{ name }}</option>
+        {% endfor %}
+      </select>
+
+      <i class="fa-solid fa-arrow-right-arrow-left arrow" id="arrow"></i>
+
+      <select class="select-language" name="target-language" id="target-language">
+        {% for code, name in languages|slice:"1:" %}
+          <option value="{{ code }}">{{ name }}</option>
+        {% endfor %}
+          <option value="pt">Português</option>
+      </select>
+    </section>
+
+    <section class="text-container">
+      <div class="card-container">
+        <div class="language-text">
+          <div class="volume-container origin"><i class='fas fa-volume-up volume-origin'></i></div>
+          <span id="language-text-origin">pt</span>
+        </div>
+        <textarea class="text-input" name="text-input" id="text-input" placeholder="Insira o texto que deseja traduzir" style="background-color: white;">{{text_to_translate|default:''}}</textarea>
+        
+        <i id="clear" class="fa fa-times clear"></i>
+
+        <div class="text-length-container">
+          <span><span id="text-length" class="text-length">0</span>/1.000</span>
+          <button type="submit" class="translate-button" id="translate-button" disabled>Traduzir</button>
+        </div>
+      </div>
+  
+
+      <div class="card-container result-container" id="result-container">
+        <div class="language-text">
+          <div class="volume-container destination"><i class='fas fa-volume-up volume-destination'></i></div>
+          <span id="language-text-destination">en</span>
+        </div>
+
+        <p id="text-output">{{translated_text|default:''}}</p>
+
+        {% if error %}
+        <p style="color: red;">Erro: {{ error }}</p>
+        {% endif %}
+
+        <i id="copy" class="fa-regular fa-copy copy"></i>
+      </div>
+    </section>
+  </form>
+
+{% endblock %}
+{% block scripts %}
+  <script src="{% static 'scripts/main.js' %}"></script>
+{% endblock %}
+</body>
+</html>
