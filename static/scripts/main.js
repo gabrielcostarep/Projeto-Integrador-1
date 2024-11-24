@@ -96,9 +96,16 @@ function updateTextLength() {
 }
 
 function textLuanguageOrigin() {
-  languageTextOrigin.textContent = sourceLanguage.value
+  const selectedOption = sourceLanguage.options[sourceLanguage.selectedIndex];
+  languageTextOrigin.textContent = selectedOption.textContent;
 }
 
 function textLuanguageDestination() {
-  languageTextDestination.textContent = targetLanguage.value
+  const selectedOption = targetLanguage.options[targetLanguage.selectedIndex];
+  languageTextDestination.textContent = selectedOption.textContent;
 }
+
+document.addEventListener('DOMContentLoaded', function() {
+  textLuanguageOrigin()
+  textLuanguageDestination()
+})
