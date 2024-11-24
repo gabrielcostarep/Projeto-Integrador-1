@@ -110,11 +110,19 @@ def homeView(request):
     }
   
   languages = list(MAIN_LANGUAGES.items())
+
+  selected_origin = request.GET.get('origin', 'pt')
+  selected_destination = request.GET.get('destination', 'en')
   
   if request.method == "GET":
     history = TranslationHistory.objects.filter(user=request.user).order_by('-id')
 
-    return render(request, "main.html", {"languages": languages, "history": history})
+    return render(request, "main.html", {
+      "languages": languages,
+      "history": history,
+      "selected_origin": selected_origin,
+      "selected_destination": selected_destination
+    })
 
   elif request.method == "POST":
     source_language = request.POST.get("source-language")
@@ -136,10 +144,29 @@ def homeView(request):
 
       history = TranslationHistory.objects.filter(user=request.user).order_by('-id')
 
-      return render( request, "main.html", { "languages": languages, "history": history, "text_to_translate": text_to_translate,"translated_text": translated_text})
+      return render( request, "main.html", {
+        "languages": languages,
+        "history": history,
+        "text_to_translate": text_to_translate,
+        "translated_text": translated_text,
+        "selected_origin": source_language,
+        "selected_destination": target_language
+      })
+    
     except Exception as e:
-      return render(request, "main.html", { "languages": languages, "history": TranslationHistory.objects.filter(user=request.user).order_by('-id'), "error": str(e)})
-  return render(request, "main.html", {"languages": languages})   
+      return render(request, "main.html", {
+        "languages": languages,
+        "history": TranslationHistory.objects.filter(user=request.user).order_by('-id'),
+        "error": str(e),
+        "selected_origin": selected_origin,
+        "selected_destination": selected_destination
+      })
+    
+  return render(request, "main.html", {
+    "languages": languages,
+    "selected_origin": selected_origin,
+    "selected_destination": selected_destination
+  })   
   
 @login_required
 def delete_translation(request):

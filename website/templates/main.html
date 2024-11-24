@@ -49,17 +49,16 @@
     <section class="selection-container">
       <select class="select-language" name="source-language" id="source-language">
         {% for code, name in languages %}
-          <option value="{{ code }}">{{ name }}</option>
+          <option value="{{ code }}" {% if code == selected_origin %}selected{% endif %}>{{ name }}</option>
         {% endfor %}
       </select>
 
       <i class="fa-solid fa-arrow-right-arrow-left arrow" id="arrow"></i>
 
       <select class="select-language" name="target-language" id="target-language">
-        {% for code, name in languages|slice:"1:" %}
-          <option value="{{ code }}">{{ name }}</option>
+        {% for code, name in languages %}
+          <option value="{{ code }}" {% if code == selected_destination %}selected{% endif %}>{{ name }}</option>
         {% endfor %}
-          <option value="pt">Português</option>
       </select>
     </section>
 
@@ -67,7 +66,7 @@
       <div class="card-container">
         <div class="language-text">
           <div class="volume-container origin"><i class='fas fa-volume-up volume-origin'></i></div>
-          <span id="language-text-origin">pt</span>
+          <span id="language-text-origin"></span>
         </div>
         <textarea class="text-input" name="text-input" id="text-input" placeholder="Insira o texto que deseja traduzir" style="background-color: white;">{{text_to_translate|default:''}}</textarea>
         
@@ -83,7 +82,7 @@
       <div class="card-container result-container" id="result-container">
         <div class="language-text">
           <div class="volume-container destination"><i class='fas fa-volume-up volume-destination'></i></div>
-          <span id="language-text-destination">en</span>
+          <span id="language-text-destination"></span>
         </div>
 
         <p id="text-output">{{translated_text|default:''}}</p>
