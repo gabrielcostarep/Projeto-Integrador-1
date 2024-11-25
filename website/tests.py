@@ -12,9 +12,9 @@ class UserViewsTestCase(TestCase):
   def setUp(self):
     """Cria um usuário para testar as views"""
     self.user = User.objects.create_user(
-      username="testuser@example.com",
+      username="testuser@example.com", # Usando o e-mail como username
       email="testuser@example.com",
-      first_name="Test User",
+      first_name="Test User", # Usando name como first_name
       password="testpassword",
     )
     self.client = Client()
