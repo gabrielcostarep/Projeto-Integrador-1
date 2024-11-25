@@ -10,8 +10,6 @@
     <form method="POST" action="{% url 'login' %}" id="form" class="form-container">
       {% csrf_token %}
 
-      <input type="hidden" name="next" value="{{ request.GET.next }}">
-
       <label class="input-label" for="email">Email</label>
       <div class="input-container">
         <input type="email" id="email" name="email" placeholder="usuario@dominio.com" value="{{ email | default:''}}">

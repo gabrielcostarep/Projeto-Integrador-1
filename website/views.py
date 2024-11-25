@@ -54,8 +54,7 @@ def loginView(request):
     user = authenticate(request, username=email, password=password)
     if user is not None:
       login(request, user)
-      next = request.POST.get('next')
-      return redirect(next.strip('/') or 'home')
+      return redirect('home')
     else:
       messages.error(request, "Senha incorreta.")
       return render(request, 'login.html', context)
@@ -79,17 +78,23 @@ def update_profile(request):
     name = request.POST.get('name')
     password = request.POST.get('password')
 
+    # Validar campos
+    if not name and not password:
+      messages.error(request, "Pelo menos um campo deve ser preenchido.")
+      return render(request, 'perfil.html', {'user': user})
+
     try:
       if name:
         user.first_name = name
       if password:
         user.set_password(password)
       user.save()
-      login(request, user)
+      login(request, user) # Reautenticar após mudança de senha
       messages.success(request, "Perfil atualizado com sucesso!")
       return redirect('perfil')
     except Exception as e:
       messages.error(request, f"Erro ao atualizar perfil: {e}")
+      return render(request, 'perfil.html', {'user': user})
 
   return render(request, 'perfil.html', {'user': user})
 
