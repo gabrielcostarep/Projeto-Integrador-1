@@ -221,3 +221,16 @@ def clear_history(request):
     messages.error(request, f"Erro ao limpar o histórico: {str(e)}")
 
   return redirect("home")
+
+# Função para excluir a conta do usuário
+@login_required
+def delete_account(request):
+  try:
+    # Deleta o usuário
+    request.user.delete() # Deleta o usuário autenticado
+    messages.success(request, "Conta excluída com sucesso!")
+  except Exception as e:
+    messages.error(request, f"Erro ao excluir a conta: {str(e)}")
+
+  return redirect("login")
+

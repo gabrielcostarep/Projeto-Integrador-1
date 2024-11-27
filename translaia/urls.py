@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout/', views.logoutView, name='logout'),
     path('perfil/', views.perfilView, name='perfil'),
     path('atualizar-perfil/', views.update_profile, name='atualizar-perfil'),
+    path('deletar-conta/', views.delete_account, name='deletar-conta'),
     path('recuperar-conta/', views.recoverView, name='recuperar-conta'),
     path('', views.homeView, name='home'),
     path("deletar-traducao/", views.delete_translation, name="deletar-traducao"),

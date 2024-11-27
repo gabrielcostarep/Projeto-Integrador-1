@@ -19,7 +19,10 @@
         <p class="email">{{ user.email }}</p>
       </div>
 
-      <div class="plan">Plano Básico</div>
+      <form action="{% url 'deletar-conta' %}">
+        {% csrf_token %}
+        <button type="submit" id="delete-account" class="delete-account">Excluir Conta</button>
+      </form>
     </div>
 
     <form method="POST" action="{% url 'atualizar-perfil' %}" id="form">
