@@ -280,6 +280,7 @@ menu {
         display: flex;
         flex-direction: column;
         gap: 10px;
+        cursor: context-menu;
 
         & .language {
           font-size: 0.8rem;
