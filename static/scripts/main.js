@@ -66,6 +66,20 @@ menu.addEventListener('click', function() {
   }
 })
 
+// Fecha o menu ao clicar fora do menu-container
+document.addEventListener('click', function(event) {
+  const menuContainer = document.querySelector('.menu-container');
+  
+  // Verifica se o clique foi fora do menu e se o menu está ativo
+  if (!menu.contains(event.target) && !menuContainer.contains(event.target)) {
+    if (menuContainer.classList.contains('menu-active')) {
+      menuContainer.classList.remove('menu-active');
+      menu.classList.remove('fa-times'); // Remove o ícone de "fechar"
+      menu.classList.add('fa-clock-rotate-left'); // Adiciona o ícone de relógio
+    }
+  }
+});
+
 // Limpa o texto de entrada, o resultado traduzido e reseta a contagem de caracteres
 clearButton.addEventListener('click', function() {
   textInput.value = ''
@@ -144,6 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
       targetLanguageSelect.value = targetLanguage;
       textInput.value = sourceText;
       textOutput.textContent = targetText;
+      textLuanguageOrigin()
+      textLuanguageDestination()
 
       // Desabilita o botão de tradução, até uma alteração seja feita
       const translateButton = document.getElementById('translate-button');
