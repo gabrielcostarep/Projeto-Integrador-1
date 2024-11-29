@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.test import Client
+from django.contrib.messages import get_messages
 
 from .models import TranslationHistory
 
@@ -142,3 +143,36 @@ class UserViewsTestCase(TestCase):
     response = self.client.post(reverse('deletar-traducao'), {'translation_id': translation.id})
     self.assertRedirects(response, reverse('home'))
     self.assertEqual(TranslationHistory.objects.filter(user=self.user).count(), 0)  # Verifica se a tradução foi removida
+
+  def test_delete_account_success(self):
+    """Testa a exclusão do usuário"""
+    self.client.login(username='testuser@example.com', password='testpassword')
+    # Faz uma requisição POST para a URL de exclusão
+    response = self.client.post(reverse("deletar-conta"))
+    
+    # Verifica se o usuário foi excluído
+    with self.assertRaises(User.DoesNotExist):
+      User.objects.get(username="testuser@example.com")
+
+    # Verifica se o redirecionamento ocorreu para a página de login
+    self.assertRedirects(response, reverse("login"))
+
+    # Verifica se a mensagem de sucesso está na storage de mensagens
+    messages = list(get_messages(response.wsgi_request))
+    self.assertIn("Conta excluída com sucesso!", [m.message for m in messages])
+
+  def test_delete_account_invalid_method(self):
+    """Testa a tentativa de exclusão do usuário com um método inválido"""
+    self.client.login(username='testuser@example.com', password='testpassword')
+    # Faz uma requisição GET para a URL de exclusão
+    response = self.client.get(reverse("deletar-conta"))
+    
+    # Verifica se o usuário ainda existe
+    self.assertTrue(User.objects.filter(username="testuser@example.com").exists())
+
+    # Verifica se o redirecionamento ocorreu para a página inicial
+    self.assertRedirects(response, reverse("perfil"))
+
+    # Verifica se a mensagem de erro está na storage de mensagens
+    messages = list(get_messages(response.wsgi_request))
+    self.assertIn("Método inválido.", [m.message for m in messages])

@@ -236,5 +236,5 @@ def delete_account(request):
     return redirect("login")
 
   messages.error(request, "Método inválido.") # Mensagem de erro se o método não for POST
-  return redirect("home")
+  return redirect("perfil")
 
