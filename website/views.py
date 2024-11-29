@@ -225,12 +225,16 @@ def clear_history(request):
 # Função para excluir a conta do usuário
 @login_required
 def delete_account(request):
-  try:
-    # Deleta o usuário
-    request.user.delete() # Deleta o usuário autenticado
-    messages.success(request, "Conta excluída com sucesso!")
-  except Exception as e:
-    messages.error(request, f"Erro ao excluir a conta: {str(e)}")
+  if request.method == "POST":
+    try:
+      # Deleta o usuário
+      request.user.delete() # Deleta o usuário autenticado
+      messages.success(request, "Conta excluída com sucesso!")
+    except Exception as e:
+      messages.error(request, f"Erro ao excluir a conta: {str(e)}")
 
-  return redirect("login")
+    return redirect("login")
+
+  messages.error(request, "Método inválido.") # Mensagem de erro se o método não for POST
+  return redirect("home")
 
