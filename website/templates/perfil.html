@@ -19,10 +19,18 @@
         <p class="email">{{ user.email }}</p>
       </div>
 
-      <form method="POST" action="{% url 'deletar-conta' %}">
-        {% csrf_token %}
-        <button type="submit" id="delete-account" class="delete-account">Excluir Conta</button>
-      </form>
+      <button type="submit" id="delete-account" class="delete-account" onsubmit="return confirmDeleteAccount()">Excluir Conta</button>
+
+      <div id="delete-modal" class="modal">
+        <div class="modal-content">
+          <p>Tem certeza de que deseja excluir sua conta? Esta ação não pode ser desfeita.</p>
+          <form method="POST" action="{% url 'deletar-conta' %}">
+            {% csrf_token %}
+            <button type="submit" class="confirm-delete">Confirmar</button>
+            <button type="button" class="cancel-delete">Cancelar</button>
+          </form>
+        </div>
+      </div>
     </div>
 
     <form method="POST" action="{% url 'atualizar-perfil' %}" id="form">

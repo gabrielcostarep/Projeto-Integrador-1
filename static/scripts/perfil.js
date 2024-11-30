@@ -69,3 +69,26 @@ form.addEventListener('submit', function (e) {
 		e.preventDefault() // Impede o envio do formulário
 	}
 })
+
+document.addEventListener("DOMContentLoaded", function () {
+  const deleteAccountButton = document.getElementById("delete-account");
+  const deleteModal = document.getElementById("delete-modal");
+  const cancelDeleteButton = document.querySelector(".cancel-delete");
+
+  // Abre o modal ao clicar no botão de exclusão
+  deleteAccountButton.addEventListener("click", function () {
+    deleteModal.style.display = "block";
+  });
+
+  // Fecha o modal ao clicar no botão de cancelar
+  cancelDeleteButton.addEventListener("click", function () {
+    deleteModal.style.display = "none";
+  });
+
+  // Fecha o modal ao clicar fora do conteúdo do modal
+  window.addEventListener("click", function (event) {
+    if (event.target === deleteModal) {
+      deleteModal.style.display = "none";
+    }
+  });
+});
