@@ -1,4 +1,4 @@
-## Projeto de site desenvolvido visando integrar as matérias de Desenvolvimento Front/Back-end e Banco de Dados
+### Projeto de site desenvolvido visando integrar as matérias de Desenvolvimento Front/Back-end e Banco de Dados
 
 # Instalações necessárias
 
