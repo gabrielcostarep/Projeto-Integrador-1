@@ -29,12 +29,12 @@ python manage.py migrate
 # WebPage em funcionamento
 
 <div align="center" >
-  ### Página de Login
+  <h3>Página de Login</h3>
   <img src="./gifs/login.gif" alt="login page" width="1000em">
-  ### Página de Cadastro
+  <h3>Página de Cadastro</h3>
   <img src="./gifs/sign-in.gif" alt="sign-in page" width="1000em">
-  ### Página Principal
+  <h3>Página Principal</h3>
   <img src="./gifs/main.gif" alt="main page" width="1000em">
-  ### Logout e Página de Perfil
+  <h3>Logout e Página de Perfil</h3>
   <img src="./gifs/perfil.gif" alt="login page" width="1000em">
 </div>
